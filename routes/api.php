@@ -14,15 +14,14 @@ use App\Http\Controllers\ProductsController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
-});
-Route::get('products/categories',[ProductsController::class, 'showCategories']);
-Route::get('products', [ProductsController::class, 'allProducts']);
-Route::get('products/{product_id}', [ProductsController::class, 'singleProduct']);
-Route::get('products/search/{keywords}', [ProductsController::class, 'searchProduct']);
+Route::controller(ProductsController::class)->group(function() {
+    Route::get('products/categories', 'showCategories');
+    Route::get('products', 'allProducts');
+    Route::get('products/{product_id}', 'singleProduct');
+    Route::get('products/search/{keywords}', 'searchProduct');
 
-Route::get('products/category/{category_name}', [ProductsController::class, 'singleCategory']);
-Route::post('products/add', [ProductsController::class, 'addProduct']);
-Route::put('products/{product_id}', [ProductsController::class, 'updateProduct']);
-Route::delete('products/{product_id}', [ProductsController::class, 'deleteProduct']);
+    Route::get('products/category/{category_name}', 'singleCategory');
+    Route::post('products/add', 'addProduct');
+    Route::put('products/{product_id}', 'updateProduct');
+    Route::delete('products/{product_id}', 'deleteProduct');
+});
